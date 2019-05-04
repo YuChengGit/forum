@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzp.forum.dao.CategoryDao">
+	<sql id="tablename">category</sql>
+	<sql id="insertFields">name</sql>
+	<sql id="selectFields">id,name
+	</sql>
+
+	<select id="findAll" resultType="com.xzp.forum.model.Category">
+		SELECT id,name FROM
+		<include refid="tablename" />
+	</select>
+	
+	<update id="">
+	
+	</update>
+	<select id="updateCategory" parameterType="com.xzp.forum.model.Category">
+		UPDATE 
+		<include refid="tablename" /> 
+			set name = #{name}
+			where id = #{id}
+	</select>
+	
+	<select id="getCategory" parameterType="long" resultType="com.xzp.forum.model.Category">
+		select * from
+		<include refid="tablename" />
+		where id = #{id}
+	</select>
+	<select id="countCategory" resultType="long">
+		select count(*) from
+		<include refid="tablename" />
+	</select>
+</mapper>

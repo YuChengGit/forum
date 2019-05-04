@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/online">
+<head>
+    <title>后台管理</title>
+    <script type="text/javascript">
+    	function edit(obj){
+    		var $tr = $(obj).parent().parent();
+    		$tr.children("td:eq(1)").find("input").removeAttr("readonly"); 
+    	}
+    	
+    	function submit(){
+    		$("form").submit();
+    	}
+    </script>
+</head>
+<body>
+    <main layout:fragment="content">
+        <article class="container" style="padding: 3% 0 2%;">
+            <header class="row">
+                <blockquote class="flow-text left" th:text="模块管理">Header</blockquote>
+                <blockquote class="flow-text right" th:text="|模块数量： | + ${ModulessTotalNum}">Number of modules</blockquote>
+            </header>
+            <section class="row">
+                <div class="col s12">
+                    <table class="striped bordered centered" th:if="${modules.size() != 0}">
+                        <thead>
+                        <tr>
+                            <th>模块位置</th>
+                            <th>模块名称</th>
+                            <th>是否可维护</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        	<form th:action="@{/updateModules}" method="get">
+                            <th:block th:each="module : ${modules}">
+                                <tr>
+                                    <td th:text="${module.id}">Topic's title</td>
+                    				
+                                    <td><input th:value="${module.name}" name = "name" readonly="readonly"/></td>
+                                    
+                                    <td th:text="否" th:if="${module.id==1}"></td>
+                                    <td th:text="是" th:if="${module.id!=1}"></td>
+                                    <td th:if="${module.id==1}" th:text="无">
+                                    </td>
+                                    <td th:if="${module.id!=1}">
+                                        <a href="javascript:void(0)" class="btn btn-floating pulse" onclick="edit(this)">
+                                          		<span style="color:white;" >编辑</span>  
+                                        </a>
+                                    </td>
+                                </tr>
+                            </th:block>
+                           </form>
+                        </tbody>
+                    </table>
+			</div>
+			 <div class="col s12">
+                  <button class="btn waves-effect waves-light" type="submit" style="position:relative;top:20px;" onclick="submit()">确定</button>
+              </div>
+            </section>
+        </article>
+    </main>
+</body>
+</html>
