@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.yucheng.forum.model.Category;
 import com.yucheng.forum.model.Topic;
 
 /**
@@ -77,4 +78,8 @@ public interface TopicDao {
 	 * @return int
 	 */
 	int getId_userById(@Param("id") Long id);
+
+	List<Topic> findAllBySearch(Topic topic);
+
+	List<Topic> findTopicsByCategoryIdOrderByCreatedDateDescSearch(Topic topic);
 }

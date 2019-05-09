@@ -75,7 +75,16 @@
 		<include refid="tablename" />
 		ORDER BY created_date DESC
 	</select>
-	
+	<select id="findTopicsByCategoryIdOrderByCreatedDateDescSearch" parameterType="com.yucheng.forum.model.Topic" resultType="com.yucheng.forum.model.Topic">
+		select * from 
+		<include refid="tablename" />
+		where category_id = #{categoryId} and title like '%${title}%' ORDER BY created_date DESC
+	</select>
+	<select id="findAllBySearch" parameterType="com.yucheng.forum.model.Topic" resultType="com.yucheng.forum.model.Topic">
+		select * from 
+		<include refid="tablename" />
+		where title like '%${title}%' ORDER BY created_date DESC
+	</select>
 	<select id="getId_userById" parameterType="long" resultType="int">
 		SELECT id_user FROM
 		<include refid="tablename" />

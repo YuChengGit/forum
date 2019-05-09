@@ -247,6 +247,27 @@ public class JedisAdapter implements InitializingBean {
 		}
 	}
 
+	/**
+	 * zrem(key, value)从这个集合中移除这个key-value
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public long zrem(String key, String value) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			return jedis.zrem(key, value);
+		} catch (Exception e) {
+			logger.error("发生异常" + e.getMessage());
+			return 0;
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+	}
 	public Set<String> zrevrange(String key, long start, long end) {
 		Jedis jedis = null;
 		try {

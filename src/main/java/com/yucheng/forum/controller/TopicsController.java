@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -95,7 +96,31 @@ public class TopicsController {
 		model.addAttribute("hasNext", pageTopic.getIsMore());
 		model.addAttribute("topicsTotalNum", topicsTotalNum);
 		model.addAttribute("isUserTopicPage", true);
+		model.addAttribute("isSearch", false);
 		return "topics"; 
+	}
+	
+	@RequestMapping(path="/search/{category_id}/{currentPage}")
+	public String search(@PathVariable String category_id,@PathVariable int currentPage,@RequestParam String title,Model model) {
+		PageBean<Topic> pageTopic=pageService.findItemByPageSearch(category_id, currentPage, 10,title);
+		List<Topic> pageList=pageTopic.getItems();
+		String header = setHeader(category_id);
+		int topicsTotalNum=topicsService.getTopicsByCategory(category_id).size();
+		
+		User user=localHost.getUser();
+		model.addAttribute("user", user);
+		model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+		model.addAttribute("topics", pageList);
+		model.addAttribute("topicsTotalNum", topicsTotalNum);
+		model.addAttribute("header", header);
+		model.addAttribute("answerDao", answerDao);
+		model.addAttribute("userDao", userDao);
+		model.addAttribute("currentPage", pageTopic.getCurrentPage());
+		model.addAttribute("totalPage", pageTopic.getTotalPage());
+		model.addAttribute("hasNext", pageTopic.getIsMore());
+		model.addAttribute("isUserTopicPage", false);
+		model.addAttribute("isSearch", true);
+		return "topics";
 	}
 
 	private String setHeader(String category_id) {

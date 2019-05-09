@@ -2,11 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/online">
 <head>
     <title>Topics | JF</title>
+    <style type="text/css">
+		form{
+			height: 60px;
+		}
+	</style>
+	<script type="text/javascript">
+		function submit(){
+			$("#form").submit();
+		}
+	</script>
 </head>
 <body>
     <main layout:fragment="content">
         <article class="container" style="padding: 3% 0 2%;">
-        <img src="/images/njit.jpg" alt="" class="circle" width="180px" height="60px"/> 
+        	<section class="row">
+        		<img src="/images/njit.jpg" alt="" class="circle" width="180px" height="60px"/>
+				    <form id="form" th:action="@{'/search/'+${category_id}+'/1'}" class="right">
+				    	<table>
+				    		<tr>
+				    			<td style="padding: 0px 0px;"><input id="in1" type="text" th:if="${isSearch!=false}" name="title" class="search" placeholder="请输入相关标题关键字" style="border: 1px solid #FF6347;width: 380px;height: 30px; margin: 0 0 0 0;"/></td>
+				    			<td style="padding: 0px 0px;"><input id="in2" type="button" th:if="${isSearch!=false}" value="搜索" class="btn" onclick="submit()" style="width: 100px;height: 30px;line-height：0px;"/></td>
+				    		</tr>
+				    	</table>
+				    </form>
+        	</section>
             <header class="row">
                 <blockquote class="flow-text left" th:text="${header}">Header</blockquote>
                 <blockquote class="flow-text right" th:text="|话题数量： | + ${topicsTotalNum}">Number of topics</blockquote>

@@ -21,6 +21,9 @@ import com.yucheng.forum.model.PageBean;
 import com.yucheng.forum.model.User;
 import com.yucheng.forum.service.PageService;
 import com.yucheng.forum.util.HostHolder;
+import com.yucheng.forum.util.JedisAdapter;
+
+import redis.clients.jedis.Jedis;
 
 @Controller
 public class AdminUsersController {
@@ -38,6 +41,10 @@ public class AdminUsersController {
 	private PageService pageService;
 	@Autowired
 	private MessageDao messageDao;
+	@Autowired
+	private JedisAdapter jedisAdapter;
+	
+	private String rankKey="forumRankKey";
 	/**
 	 * 分页处理
 	 * @param category
@@ -50,12 +57,12 @@ public class AdminUsersController {
 		List<Category> modules = categoryDao.findAll();
 		PageBean<User> pageUser = pageService.findUsersByPage(currentPage, 5);
 		int UsersTotalNum = userDao.countUsers().intValue();
-		List<User> users = userDao.getAllUser();
+		List<User> items = pageUser.getItems();
 		
 		User user=localHost.getUser();
 		model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
 		model.addAttribute("user", user);
-		model.addAttribute("users", users);
+		model.addAttribute("users", items);
 		model.addAttribute("modules",modules);
 		model.addAttribute("UsersTotalNum", UsersTotalNum);
 		model.addAttribute("userDao", userDao);
@@ -75,7 +82,9 @@ public class AdminUsersController {
 	public View deleteTopic(@PathVariable Long id,Model model,HttpServletRequest request) {
 		User user = hostHolder.getUser();
 		model.addAttribute(user);
+		User userById = userDao.getUserById(id);
 		userDao.deleteUserById(id);
+		jedisAdapter.zrem(rankKey, userById.getUsername());
 		String contextPath = request.getContextPath();
 		return new RedirectView(contextPath + "/Users/1");
 	}

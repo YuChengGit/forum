@@ -16,8 +16,8 @@
                     <div class="row">
                         <div class="col s12" >
                             		 <p th:each="category : ${categorys}">
-		                                <input th:value="${category.id}" th:name="category" class="with-gap" type="radio" th:id="${category.id}" required="required"/>
-		                                <label th:for="${category.id}" th:text="${category.name}"></label>
+		                                <input th:if="${category.id!=1}" th:value="${category.id}" th:name="category" class="with-gap" type="radio" th:id="${category.id}" required="required"/>
+		                                <label th:if="${category.id!=1}" th:for="${category.id}" th:text="${category.name}"></label>
 		                            </p>
                         </div>
                     </div>
