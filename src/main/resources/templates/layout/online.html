@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="description" content="Programming forum about Java powered by Spring Framework"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no"/>
     <title>Internet Forum</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
@@ -64,6 +64,22 @@
 						}
 					 }); 
 					});
+		    
+			function confirmDel(){
+				 if(confirm("确认删除当前话题吗？")){
+					 return true;
+				 }else{
+					 return false;
+				 }
+			  }
+			
+			function confirmTichu(){
+				 if(confirm("确认踢出当前用户吗？一旦踢出该用户将无法登录")){
+					 return true;
+				 }else{
+					 return false;
+				 }
+			  }
     </script>
 </body>
 </html>

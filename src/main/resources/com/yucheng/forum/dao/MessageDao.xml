@@ -23,7 +23,7 @@
 		<include refid="selectFields" />
 		FROM
 		<include refid="tablename" />
-		WHERE to_id = #{toId}
+		WHERE to_id = #{toId} ORDER BY created_date DESC
 	</select>
 
 	<delete id="deleteMessageByTopicId" parameterType="long">
@@ -44,7 +44,7 @@
 		<include refid="selectFields" />
 		FROM
 		<include refid="tablename" />
-		WHERE to_id=#{toId} AND has_read=0
+		WHERE to_id=#{toId} AND has_read=0 ORDER BY created_date DESC
 	</select>
 	
 	<update id="changeReadStatement" parameterType="long">

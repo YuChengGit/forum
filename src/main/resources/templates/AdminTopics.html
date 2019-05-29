@@ -35,7 +35,8 @@
                                     
                                     <td th:text="${topic.displayParsedCreatedDate()}">Topic's created date</td>
                                     <td>
-                                        <a th:href="@{'/AdminTopic/' + ${topic.getId()}}" class="btn btn-floating pulse">
+                                    	<a th:href="@{'/AdminTopic/edit/' + ${topic.getId()}}" class="btn btn-floating pulse">编辑</a>
+                                        <a th:href="@{'/AdminTopic/' + ${topic.getId()}}" class="btn btn-floating pulse" onclick="javascript:return confirmDel()">
                                           		<span style="color:white;">删除</span>  
                                         </a>
                                     </td>

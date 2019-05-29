@@ -34,7 +34,7 @@
                                     <td th:text="${user.createdDate}">user created date</td>
                                     <td th:text="${user.role}">role of user</td>
                                     <td>
-                                        <a th:href="@{'/deleteUserById/' + ${user.getId()}}" class="btn btn-floating pulse">
+                                        <a th:if="${user.role=='USER'}" th:href="@{'/deleteUserById/' + ${user.getId()}}" class="btn btn-floating pulse" onclick="javascript:return confirmTichu()">
                                           		<span style="color:white;">踢出</span>  
                                         </a>
                                     </td>

@@ -107,7 +107,6 @@ public class AddTopicController {
 		topic.setCreatedDate(new Date());
 		topic.setIdUser(Integer.parseInt(id_user));
 		topic.setUser(userDao.getUserById(Long.parseLong(id_user)));
-
 		topicDao.addTopic(topic);
 		String contextPath = request.getContextPath();
 		return new RedirectView(contextPath + "/topics/"+category+"/1");

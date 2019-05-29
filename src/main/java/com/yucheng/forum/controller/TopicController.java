@@ -44,7 +44,7 @@ public class TopicController {
 	@Autowired
 	TopicsService topicsService;
 	/**
-	 * 删除一个话题
+	 * 管理员删除一个话题
 	 * @param id
 	 * @param model
 	 * @param request
@@ -58,7 +58,52 @@ public class TopicController {
 		String contextPath = request.getContextPath();
 		return new RedirectView(contextPath + "/admin_topics/1/1");
 	}
+	/**
+	 * 用户删除自己的话题
+	 * @param id
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/topicC/{id}")
+	public View deleteTopicC(@PathVariable Long id,Model model,HttpServletRequest request) {
+		User user = hostHolder.getUser();
+		String path = (String) request.getParameter("path");
+		model.addAttribute(user);
+		topicDao.deleteTopicById(id);
+		String contextPath = request.getContextPath();
+		return new RedirectView(contextPath + "/topics/"+path+"/1");
+	}
+	//编辑话题页面显示
+	@RequestMapping(path = "/AdminTopic/edit/{id}", method = RequestMethod.GET)
+	public String editTopic(@PathVariable String id, Model model) {
+		
+		User user = hostHolder.getUser();
+		Long idUser = user.getId();
+		
+		Topic topic = topicDao.findTopicById(Long.valueOf(id));
+		List<Answer> answers = answerDao.findAnswerByTopic_Id(Long.valueOf(id));
+		
+		model.addAttribute("user", user);
+		model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+		model.addAttribute("topic", topic);
+		model.addAttribute("answers", answers);
+		model.addAttribute("idUser", idUser);
+		model.addAttribute("userDao", userDao);
+		return "editTopic";
+	}
 	
+	//修改话题
+	@RequestMapping("/topic/edit/{id}")
+	public View edit(@PathVariable String id,@RequestParam("content") String content, @RequestParam("code") String code, HttpServletRequest request) {
+		Topic topic = topicDao.findTopicById(Long.valueOf(id));
+		topic.setContent(content);
+		topic.setCode(code);
+		topicDao.updateTopicById(topic);
+		String contextPath = request.getContextPath();
+		return new RedirectView(contextPath + "/admin_topics/1/1");
+	}
+	//查看话题
 	@RequestMapping(path = "/topic/{id}", method = RequestMethod.GET)
 	public String displayTopic(@PathVariable String id, Model model) {
 		

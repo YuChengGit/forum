@@ -90,4 +90,7 @@
 		<include refid="tablename" />
 		WHERE id = #{id}
 	</select>
+	<update id="updateTopicById" parameterType="com.yucheng.forum.model.Topic">
+		update <include refid="tablename" /> SET content = #{content},code = #{code} where id = #{id} 
+	</update>
 </mapper>

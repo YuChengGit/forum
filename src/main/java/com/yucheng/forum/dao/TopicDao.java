@@ -82,4 +82,6 @@ public interface TopicDao {
 	List<Topic> findAllBySearch(Topic topic);
 
 	List<Topic> findTopicsByCategoryIdOrderByCreatedDateDescSearch(Topic topic);
+	
+	void updateTopicById(Topic topic);
 }

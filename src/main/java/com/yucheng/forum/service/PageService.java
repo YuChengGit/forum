@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.yucheng.forum.dao.TopicDao;
 import com.yucheng.forum.dao.UserDao;
-import com.yucheng.forum.model.Category;
 import com.yucheng.forum.model.PageBean;
 import com.yucheng.forum.model.Topic;
 import com.yucheng.forum.model.User;
