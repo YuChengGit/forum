@@ -1,1 +1,1 @@
-基于springboot的论坛系统
+SpringBoot+SpringSecurity+MyBatis+Redis+FastDFS
